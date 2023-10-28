@@ -12,7 +12,7 @@ function ExtractText() {
         formData.append('file', file);
         setLoading(true)
         try {
-            let response = await axios.post('http://localhost:8000//converter/change-video-to-audio/', formData, {
+            let response = await axios.post('http://51.20.138.213/converter/change-video-to-audio/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }

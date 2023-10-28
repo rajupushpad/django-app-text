@@ -12,7 +12,7 @@ function ExtractAudio() {
         setLoading(true)
         try {
 
-            const response = await fetch('http://localhost:8000//converter/extract-audio-from-video/', {
+            const response = await fetch('http://51.20.138.213/converter/extract-audio-from-video/', {
                 method: 'POST',
                 body: formData,
             });
