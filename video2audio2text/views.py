@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import HttpResponse
+from django.http import FileResponse
 
 import moviepy.editor as mp 
 import speech_recognition as sr 
@@ -27,7 +28,6 @@ def change_video_to_audio(request):
 
     # return Response({'message': 'File converted successfully'})
     return Response({'message': 'Conversion successful', 'resText': resText}, status=status.HTTP_200_OK)
-
 
 def extractTextFromVideoFile(file, textLang="en-US"):
 
@@ -80,3 +80,32 @@ def extractTextFromVideoFile(file, textLang="en-US"):
 
     except Exception as e:
         print(str(e))
+
+@api_view(['POST'])
+def extract_audio_from_video(request):
+    uploaded_file = request.FILES['file']
+
+    # Save the uploaded file to a temporary location
+    temp_file_path = default_storage.save('temp_video.mp4', ContentFile(uploaded_file.read()));
+
+    if temp_file_path:
+
+        # Create a VideoFileClip from the temporary file
+        
+        video_clip = mp.VideoFileClip('media/'+temp_file_path)
+
+        # Extract the audio from the video clip
+        audio_clip = video_clip.audio
+
+        # You can now use 'audio_clip' as needed
+
+        output_audio_path = 'media/output_audio.mp3'
+
+        # Save the audio clip to the local directory
+        audio_clip.write_audiofile(output_audio_path)
+
+        with open(output_audio_path, 'rb') as audio_file:
+            response = HttpResponse(audio_file.read())
+            response['Content-Type'] = 'audio/mpeg'
+            response['Content-Disposition'] = 'attachment; filename="output_audio.mp3"'
+            return response

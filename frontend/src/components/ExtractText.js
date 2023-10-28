@@ -1,28 +1,18 @@
-// frontend/src/components/FileUpload.js
 import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 
-function FileUpload() {
+function ExtractText() {
     const [file, setFile] = useState(null);
     const [fileText, setFileText] = useState('');
-    const [option, setOption] = useState(''); // To store the selected option
     const [loading, setLoading] = useState(false);
-
-    const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
-    };
-
-    const handleOptionChange = (e) => {
-        setOption(e.target.value);
-    };
 
     const handleUpload = async () => {
         const formData = new FormData();
         formData.append('file', file);
         setLoading(true)
         try {
-            let response = await axios.post('http://51.20.138.213/converter/change-video-to-audio/', formData, {
+            let response = await axios.post('http://localhost:8000//converter/change-video-to-audio/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -89,4 +79,4 @@ function FileUpload() {
     );
 }
 
-export default FileUpload;
+export default ExtractText;

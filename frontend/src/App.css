@@ -80,3 +80,21 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+.optionBox {
+  padding: 20px;
+  border: 1px solid black;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.optionBoxSelected {
+  padding: 20px;
+  border: 1px solid white;
+  justify-content: center;
+  display: flex;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
